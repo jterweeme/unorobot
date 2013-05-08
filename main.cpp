@@ -9,7 +9,7 @@ class Robot
 public:
     Robot();
 private:
-    PanTilt pt;
+    PanTilt *pt;
 };
 
 Robot::Robot()
