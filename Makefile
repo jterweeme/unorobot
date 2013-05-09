@@ -12,7 +12,10 @@ main.o: main.cpp
 upload: main.hex
 	avrdude -c arduino -p m328p -P /dev/ttyACM0 -U $<
 
-documentation.pdf: documentatie.xml pdf.xsl
+unorobot.svg: unorobot.uxf
+	umlet -action=convert -format=svg -filename=$<
+
+documentation.pdf: documentatie.xml pdf.xsl unorobot.svg
 	fop -xsl pdf.xsl -xml documentatie.xml -pdf $@
 
 

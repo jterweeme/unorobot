@@ -3,7 +3,7 @@
 <page>
     <h1>Documentatie UnoRobot</h1>
     <figure>
-        <img src="unorobot.svg" alt=""/>
+        <img src="unorobot.svg" alt="" content-width="15cm"/>
     </figure>
 </page>
 </doc>
