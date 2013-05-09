@@ -15,8 +15,8 @@ upload: main.hex
 unorobot.svg: unorobot.uxf
 	umlet -action=convert -format=svg -filename=$<
 
-documentation.pdf: documentatie.xml pdf.xsl unorobot.svg
-	fop -xsl pdf.xsl -xml documentatie.xml -pdf $@
+documentation.pdf: documentation.xml pdf.xsl unorobot.svg
+	fop -xsl pdf.xsl -xml documentation.xml -pdf $@
 
 
 
