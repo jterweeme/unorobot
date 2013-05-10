@@ -13,7 +13,9 @@
 -pt: PanTilt
 -comPort: ComPort
 --
-+Robot()</panel_attributes>
++Robot()
+_+blink(): void_
+_+command(): void_</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -133,18 +135,22 @@
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>940</x>
-      <y>300</y>
+      <y>190</y>
       <w>220</w>
-      <h>140</h>
+      <h>250</h>
     </coordinates>
     <panel_attributes>*ComPort*
 --
 _-uUDR0_
+_-buffer: char[200]_
+_-buffer_ptr: uint8_t_
 --
 +ComPort()
 +poets(s: string): void
 +putcee(c: char): void
-_+onReceive(): void_</panel_attributes>
+_+onReceive(): void_
+_-addToBuffer(): void_
+_-getBuffer(): char *_</panel_attributes>
     <additional_attributes/>
   </element>
   <element>

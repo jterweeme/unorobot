@@ -1,62 +1,8 @@
 #include <stdlib.h>
 #include <stdint.h>
+#include <string.h>
 #include "main.h"
 
-extern "C" void __vector_18() __attribute__ ((signal, used, externally_visible));
-
-void * operator new (size_t size)
-{
-    return malloc(size);
-}
-
-class Servo
-{
-public:
-    Servo();
-};
-
-class PanServo : public Servo
-{
-public:
-    PanServo();
-    static void move();
-private:
-    static constexpr volatile uint8_t * const UNODDRB   = (volatile uint8_t *)0x24;
-    static constexpr volatile uint8_t * const UNOTCCR1A = (volatile uint8_t *)0x80;
-    static constexpr volatile uint8_t * const UNOTCCR1B = (volatile uint8_t *)0x81;
-    static constexpr volatile uint8_t * const UNOTCCR2A = (volatile uint8_t *)0xb0;
-    static constexpr volatile uint8_t * const UNOTCCR2B = (volatile uint8_t *)0xb1;
-    static constexpr volatile uint8_t * const UNOOCR1A  = (volatile uint8_t *)0x88;
-    static constexpr volatile uint8_t * const UNOOCR1B  = (volatile uint8_t *)0x8a;
-    static constexpr volatile uint8_t * const UNOOCR2A  = (volatile uint8_t *)0xb3;
-
-    static const uint8_t UWGM00  = 0;
-    static const uint8_t UWGM01  = 1;
-    static const uint8_t UCOM1A1 = 7;
-    static const uint8_t UCOM2A1 = 7;
-    static const uint8_t UCS01   = 1;
-    static const uint8_t UCS00   = 0;
-};
-
-class PanTilt
-{
-public:
-    PanTilt();
-private:
-    Servo *pan;
-    Servo *tilt;
-};
-
-class Robot
-{
-public:
-    Robot();
-private:
-    PanTilt *pt;
-    ComPort *comPort;
-    volatile uint8_t *uPORTB = (volatile uint8_t *)0x25;
-
-};
 
 ComPort::ComPort()
 {
@@ -64,6 +10,10 @@ ComPort::ComPort()
     *UUCSR0B = (1<<UTXEN0) | (1<<uRXEN0) | (1<<uRXCIE0);
     asm volatile ("sei" ::: "memory");
 }
+
+char ComPort::buffer[200];
+uint8_t ComPort::buffer_ptr;
+uint8_t ComPort::last_buffer_ptr;
 
 void ComPort::putcee(char c)
 {
@@ -78,29 +28,53 @@ void PanServo::move()
     (*UNOOCR1A)--;
 }
 
+void PanServo::moveTo(uint8_t deg)
+{
+    *UNOOCR1A = deg;
+}
+
+void TiltServo::moveTo(uint8_t deg)
+{
+    *uOCR2A = deg;
+}
+
 void ComPort::poets(const char *s)
 {
     while (*s)
-    {
         putcee(*s++);
-    }
 }
 
 int ComPort::addToBuffer(char c)
 {
+    if (c == '\r')
+    {
+        buffer[buffer_ptr] = 0;
+        last_buffer_ptr = buffer_ptr;
+        buffer_ptr = 0;
+        return 1;
+    }
+
+    buffer[buffer_ptr] = c;
+    buffer_ptr++;
     return 0;
 }
 
 PanServo::PanServo()
 {
-    *UNODDRB |= (1<<1) | (1<<2) | (1<<3) | (1<<5);
-    *UNOTCCR1A = (1<<UWGM00) | (1<<UWGM01) | (1<<UCOM1A1) | (1<<UCS01) | (1<<UCS00);
+    *uDDRB |= (1<<1) | (1<<2) | (1<<3) | (1<<5);
+    *uTCCR1A = (1<<UWGM00) | (1<<UWGM01) | (1<<UCOM1A1) | (1<<UCS01) | (1<<UCS00);
     *UNOTCCR1B = (1<<UWGM00) | (1<<UWGM01) | (1<<UCOM1A1) | (1<<UCS01) | (1<<UCS00);
-    *UNOTCCR2A = (1<<UWGM00) | (1<<UWGM01) | (1<<UCOM2A1) | (1<<UCS01) | (1<<UCS00);
-    *UNOTCCR2B = (1<<UWGM00) | (1<<UWGM01) | (1<<UCOM2A1) | (1<<UCS01) | (1<<UCS00);
     *UNOOCR1A = 244;
-    *UNOOCR1B = 44;
-    *UNOOCR2A = 44;
+    *UNOOCR1B = 244;
+}
+
+TiltServo::TiltServo()
+{
+    *uTCCR2A = (1<<UWGM00) | (1<<UWGM01) | (1<<UCOM1A1) | (1<<UCS01) | (1<<UCS00);
+    *uTCCR2B = (1<<UWGM00) | (1<<UWGM01) | (1<<UCOM1A1) | (1<<UCS01) | (1<<UCS00);
+    *uOCR2A = 244;
+    *uOCR2B = 244;
+
 }
 
 Servo::Servo()
@@ -110,7 +84,7 @@ Servo::Servo()
 PanTilt::PanTilt()
 {
     pan = new PanServo();
-    tilt = new Servo();
+    tilt = new TiltServo();
 }
 
 Robot::Robot()
@@ -120,10 +94,33 @@ Robot::Robot()
     comPort->poets("Lorem ipsum");
 }
 
+char *ComPort::getBuffer()
+{
+    return buffer;
+}
+
 void ComPort::onReceive()
 {
-    uint8_t onzin = *uUDR0;
-    PanServo::move();
+    if (addToBuffer(*uUDR0) == 1)
+        Robot::command(getBuffer());
+}
+
+void Robot::blink()
+{
+    *uPORTB ^= (1<<5);
+}
+
+void Robot::command(char *cmd)
+{
+    char *commando = strtok((char *)cmd, " ,.-\r");
+    char *parameter = strtok(NULL, " ,.-");
+    unsigned int deg = atoi(parameter);
+    
+    if (strcmp(commando, "p") == 0)
+        PanServo::moveTo(deg);
+
+    if (strcmp(commando, "t") == 0)
+        TiltServo::moveTo(deg);
 }
 
 void __vector_18()

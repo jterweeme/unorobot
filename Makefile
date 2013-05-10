@@ -6,7 +6,7 @@ main.hex: main
 main: main.o
 	avr-g++ -mmcu=atmega328p -o $@ $^
 
-main.o: main.cpp
+main.o: main.cpp main.h
 	avr-g++ -c -O2 -std=c++11 -mmcu=atmega328p -o $@ $<
 
 upload: main.hex
