@@ -58,7 +58,7 @@ public:
 private:
     static constexpr volatile uint8_t * const uTCCR1A   = (volatile uint8_t *)0x80;
     static constexpr volatile uint8_t * const UNOTCCR1B = (volatile uint8_t *)0x81;
-    static constexpr volatile uint8_t * const UNOOCR1A  = (volatile uint8_t *)0x88;
+    static constexpr volatile uint8_t * const output = (volatile uint8_t *)0x88;
     static constexpr volatile uint8_t * const UNOOCR1B  = (volatile uint8_t *)0x8a;
 
 };

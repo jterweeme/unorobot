@@ -49,12 +49,13 @@ _+command(): void_</panel_attributes>
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>630</x>
-      <y>140</y>
+      <y>190</y>
       <w>240</w>
-      <h>120</h>
+      <h>80</h>
     </coordinates>
     <panel_attributes>*Servo*
 --
+_#uWGM00: uint8_t_
 --
 +Servo()</panel_attributes>
     <additional_attributes/>
@@ -63,73 +64,79 @@ _+command(): void_</panel_attributes>
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>630</x>
-      <y>300</y>
+      <y>330</y>
       <w>110</w>
-      <h>140</h>
+      <h>120</h>
     </coordinates>
     <panel_attributes>*PanServo*
 --
+_-uTCCR1A_
+_-output_
 --
-+PanServo()</panel_attributes>
++PanServo()
+_+moveTo()_</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>650</x>
-      <y>230</y>
+      <y>240</y>
       <w>50</w>
-      <h>90</h>
+      <h>110</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>30;30;30;70</additional_attributes>
+    <additional_attributes>30;30;30;90</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>650</x>
-      <y>410</y>
+      <y>420</y>
       <w>50</w>
-      <h>120</h>
+      <h>110</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
-    <additional_attributes>30;100;30;30</additional_attributes>
+    <additional_attributes>30;90;30;30</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>760</x>
-      <y>300</y>
+      <y>330</y>
       <w>110</w>
-      <h>140</h>
+      <h>120</h>
     </coordinates>
     <panel_attributes>*TiltServo*
 --
+_-uTCCR2A_
+_-output_
 --
-+TiltServo()</panel_attributes>
++TiltServo()
+_+moveTo()_</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>790</x>
-      <y>410</y>
+      <y>420</y>
       <w>50</w>
-      <h>120</h>
+      <h>110</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
-    <additional_attributes>30;100;30;30</additional_attributes>
+    <additional_attributes>30;90;30;30</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>790</x>
-      <y>230</y>
+      <y>240</y>
       <w>50</w>
-      <h>90</h>
+      <h>110</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>30;30;30;70</additional_attributes>
+    <additional_attributes>30;30;30;90</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
@@ -137,7 +144,7 @@ _+command(): void_</panel_attributes>
       <x>940</x>
       <y>190</y>
       <w>220</w>
-      <h>250</h>
+      <h>260</h>
     </coordinates>
     <panel_attributes>*ComPort*
 --
@@ -157,11 +164,11 @@ _-getBuffer(): char *_</panel_attributes>
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>1020</x>
-      <y>410</y>
+      <y>420</y>
       <w>50</w>
-      <h>120</h>
+      <h>110</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
-    <additional_attributes>30;100;30;30</additional_attributes>
+    <additional_attributes>30;90;30;30</additional_attributes>
   </element>
 </diagram>

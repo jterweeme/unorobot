@@ -25,12 +25,12 @@ void ComPort::putcee(char c)
 
 void PanServo::move()
 {
-    (*UNOOCR1A)--;
+    (*output)--;
 }
 
 void PanServo::moveTo(uint8_t deg)
 {
-    *UNOOCR1A = deg;
+    *output = deg;
 }
 
 void TiltServo::moveTo(uint8_t deg)
@@ -64,7 +64,7 @@ PanServo::PanServo()
     *uDDRB |= (1<<1) | (1<<2) | (1<<3) | (1<<5);
     *uTCCR1A = (1<<UWGM00) | (1<<UWGM01) | (1<<UCOM1A1) | (1<<UCS01) | (1<<UCS00);
     *UNOTCCR1B = (1<<UWGM00) | (1<<UWGM01) | (1<<UCOM1A1) | (1<<UCS01) | (1<<UCS00);
-    *UNOOCR1A = 244;
+    *output = 244;
     *UNOOCR1B = 244;
 }
 
