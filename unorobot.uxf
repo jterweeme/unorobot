@@ -3,14 +3,15 @@
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>930</x>
-      <y>300</y>
+      <x>940</x>
+      <y>510</y>
       <w>220</w>
       <h>150</h>
     </coordinates>
     <panel_attributes>*Robot*
 --
 -pt: PanTilt
+-comPort: ComPort
 --
 +Robot()</panel_attributes>
     <additional_attributes/>
@@ -18,15 +19,15 @@
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>620</x>
-      <y>300</y>
-      <w>210</w>
+      <x>630</x>
+      <y>510</y>
+      <w>240</w>
       <h>150</h>
     </coordinates>
     <panel_attributes>*PanTilt*
 --
--pan: Pan
--tilt: Tilt
+-pan: PanServo
+-tilt: TiltServo
 --
 +PanTilt()</panel_attributes>
     <additional_attributes/>
@@ -34,36 +35,127 @@
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>800</x>
-      <y>340</y>
-      <w>150</w>
+      <x>840</x>
+      <y>550</y>
+      <w>120</w>
       <h>50</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
-    <additional_attributes>130;30;30;30</additional_attributes>
+    <additional_attributes>100;30;30;30</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>360</x>
-      <y>300</y>
-      <w>160</w>
-      <h>150</h>
+      <x>630</x>
+      <y>140</y>
+      <w>240</w>
+      <h>120</h>
     </coordinates>
     <panel_attributes>*Servo*
 --
---</panel_attributes>
+--
++Servo()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>630</x>
+      <y>300</y>
+      <w>110</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>*PanServo*
+--
+--
++PanServo()</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>490</x>
-      <y>340</y>
-      <w>150</w>
-      <h>50</h>
+      <x>650</x>
+      <y>230</y>
+      <w>50</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>30;30;30;70</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>650</x>
+      <y>410</y>
+      <w>50</w>
+      <h>120</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
-    <additional_attributes>130;30;30;30</additional_attributes>
+    <additional_attributes>30;100;30;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>760</x>
+      <y>300</y>
+      <w>110</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>*TiltServo*
+--
+--
++TiltServo()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>790</x>
+      <y>410</y>
+      <w>50</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>30;100;30;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>790</x>
+      <y>230</y>
+      <w>50</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>30;30;30;70</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>940</x>
+      <y>300</y>
+      <w>220</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>*ComPort*
+--
+_-uUDR0_
+--
++ComPort()
++poets(s: string): void
++putcee(c: char): void
+_+onReceive(): void_</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>1020</x>
+      <y>410</y>
+      <w>50</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>30;100;30;30</additional_attributes>
   </element>
 </diagram>

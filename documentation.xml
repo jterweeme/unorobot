@@ -1,9 +1,81 @@
 <?xml version="1.0"?>
 <doc>
 <page>
-    <h1>Documentatie UnoRobot</h1>
+    <h1>Documentation UnoRobot</h1>
     <figure>
         <img src="unorobot.svg" alt="" content-width="15cm"/>
+    </figure>
+    <h1>De ATMega328p</h1>
+    <pdip>
+        <pin>PC6 (RESET/PCINT14)</pin>
+        <pin>PD0 (RXD/PCINT16)</pin>
+        <pin>PD1 (TXD/PCINT17)</pin>
+        <pin>PD2 (INT0/PCINT18)</pin>
+        <pin>PD3 (INT1/OC2B/PCINT19)</pin>
+        <pin>PD4 (XCK/T0/PCINT20)</pin>
+        <pin>VCC</pin>
+        <pin>GND</pin>
+        <pin>PB6 (XTAL1/TOSC1/PCINT6)</pin>
+        <pin>PB7 (XTAL2/TOSC2/PCINT7)</pin>
+        <pin>PD5 (T1/OC0B/PCINT21)</pin>
+        <pin>PD6 (AIN0/OC0A/PCINT22)</pin>
+        <pin>PD7 (AIN1/PCINT23)</pin>
+        <pin>PB0 (ICP1/CLK0/PCINT0)</pin>
+
+        <pin>PB1 (OC1A/PCINT1)</pin>
+        <pin>PB2 (SS/OC1B/PCINT2)</pin>
+        <pin>PB3 (OC2A/MOSI/PCINT3)</pin>
+        <pin>PB4 (MISO/PCINT4)</pin>
+        <pin>PB5 (SCK/PCINT5)</pin>
+        <pin>AVCC</pin>
+        <pin>AREF</pin>
+        <pin>GND</pin>
+        <pin>PC0 (ADC0/PCINT8)</pin>
+        <pin>PC1 (ADC1/PCINT9)</pin>
+        <pin>PC2 (ADC2/PCINT10)</pin>
+        <pin>PC3 (ADC3/PCINT11)</pin>
+        <pin>PC4 (ADC4/SDA/PCINT12)</pin>
+        <pin>PC5 (ADC5/SCL/PCINT13)</pin>
+    </pdip>
+    <h1>Arduino Uno</h1>
+    <figure>
+        <figcaption>Pin Mapping with ATMega328p</figcaption>
+        <ul>
+            <li>RX0 - PD0</li>
+            <li>TX1 - PD1</li>
+            <li>2 - PD2</li>
+            <li>3 - PD3</li>
+            <li>4 - PD4</li>
+            <li>5 - PD5</li>
+            <li>6 - PD6</li>
+            <li>7 - PD7</li>
+
+            <li>8 - PB0</li>
+            <li>9 - PB1</li>
+            <li>10 - PB2</li>
+            <li>11 - PB3</li>
+            <li>12 - PB4</li>
+            <li>13 - PB5</li>
+            <li>GND - GND</li>
+            <li>AREF - AREF</li>
+
+            <li>A0 - PC0</li>
+            <li>A1 - PC1</li>
+            <li>A2 - PC2</li>
+            <li>A3 - PC3</li>
+            <li>A4 - PC4</li>
+            <li>A5 - PC5</li>
+        </ul>
+    </figure>
+    <h1>The Servo class</h1>
+    <h2>PWM</h2>
+    <figure>
+        <figcaption>Timer Output mapping</figcaption>
+        <ul>
+            <li>OC0A - Timer0A</li>
+            <li>OC0B - Timer0B</li>
+            <li>OC2B - Timer2B</li>
+        </ul>
     </figure>
 </page>
 </doc>

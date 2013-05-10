@@ -20,7 +20,7 @@
             <xsl:for-each select="page">
                 <fo:page-sequence master-reference="romp">
                     <fo:flow flow-name="xsl-region-body">
-                        <xsl:apply-templates select="figure"/>
+                        <xsl:apply-templates select="figure|h1"/>
                     </fo:flow>
                 </fo:page-sequence>
             </xsl:for-each>
@@ -39,6 +39,13 @@
             </fo:external-graphic>
         </fo:block>
     </xsl:template>
+
+    <xsl:template match="h1">
+        <fo:block font-size="24pt">
+            <xsl:value-of select="."/>
+        </fo:block>
+    </xsl:template>
+
 </xsl:stylesheet>
 
 
