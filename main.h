@@ -85,6 +85,12 @@ private:
     Servo *tilt;
 };
 
+class Motor
+{
+public:
+    Motor();
+};
+
 class Robot
 {
 public:
@@ -94,6 +100,7 @@ public:
 private:
     PanTilt *pt;
     ComPort *comPort;
+    Motor *motor;
     static constexpr volatile uint8_t * const uPORTB = (volatile uint8_t *)0x25;
 
 };
