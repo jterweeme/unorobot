@@ -178,11 +178,17 @@ _-getBuffer(): char *_</panel_attributes>
       <x>940</x>
       <y>710</y>
       <w>220</w>
-      <h>90</h>
+      <h>150</h>
     </coordinates>
     <panel_attributes>*Motor*
 --
---</panel_attributes>
+_-uDDRD_
+_-uPORTD_
+--
+_+linksVooruit(): void_
+_+linksAchteruit(): void_
+_+rechtsVooruit(): void_
+_+rechtsAchteruit(): void_</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
