@@ -3,6 +3,7 @@
 #include <string.h>
 #include "main.h"
 
+Robot *g_robot;
 
 ComPort::ComPort()
 {
@@ -91,7 +92,7 @@ Robot::Robot()
 {
     pt = new PanTilt();
     comPort = new ComPort();
-    motor = new Motor();
+    motor = new PWMPLLMotor();
     comPort->poets("Lorem ipsum");
 }
 
@@ -103,7 +104,7 @@ char *ComPort::getBuffer()
 void ComPort::onReceive()
 {
     if (addToBuffer(*uUDR0) == 1)
-        Robot::command(getBuffer());
+        g_robot->command(getBuffer());
 }
 
 void Robot::blink()
@@ -124,39 +125,55 @@ void Robot::command(char *cmd)
         TiltServo::moveTo(deg);
 
     if (strcmp(commando, "q") == 0)
-        Motor::linksVooruit(deg);
+        motor->linksVooruit(deg);
 
     if (strcmp(commando, "a") == 0)
-        Motor::linksAchteruit(deg);
+        motor->linksAchteruit(deg);
 
     if (strcmp(commando, "w") == 0)
-        Motor::rechtsVooruit(deg);
+        motor->rechtsVooruit(deg);
 
     if (strcmp(commando, "s") == 0)
-        Motor::rechtsAchteruit(deg);
+        motor->rechtsAchteruit(deg);
+}
+
+PWMPLLMotor::PWMPLLMotor() : Motor()
+{
 }
 
 Motor::Motor()
 {
-    *uDDRD |= (1<<5) | (1<<6);
+    *uDDRD |= (1<<4) | (1<<5) | (1<<6);
 }
 
 void Motor::linksVooruit(unsigned int speed)
 {
 }
 
+void PWMPLLMotor::linksVooruit(unsigned int speed)
+{
+    *uPORTD |= (1<<4) | (1<<5);
+}
+
+void PWMPLLMotor::linksAchteruit(unsigned int speed)
+{
+    *uPORTD &= ~(1<<4);
+    *uPORTD |= (1<<5);
+}
+
 void Motor::linksAchteruit(unsigned int speed)
 {
-    *uPORTD |= (1<<5);
 }
 
 void Motor::rechtsVooruit(unsigned int speed)
 {
+    *uPORTD |= (1<<6) | (1<<7);
 }
 
 void Motor::rechtsAchteruit(unsigned int speed)
 {
     *uPORTD |= (1<<6);
+    *uPORTD &= ~(1<<7);
 }
 
 void __vector_18()
@@ -166,7 +183,7 @@ void __vector_18()
 
 int main()
 {
-    Robot robot;
+    g_robot = new Robot();
     while (true) {
     }
 

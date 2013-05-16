@@ -89,13 +89,21 @@ class Motor
 {
 public:
     Motor();
-    static void linksVooruit(unsigned int);
-    static void linksAchteruit(unsigned int);
-    static void rechtsVooruit(unsigned int);
-    static void rechtsAchteruit(unsigned int);
-private:
+    virtual void linksVooruit(unsigned int);
+    virtual void linksAchteruit(unsigned int);
+    virtual void rechtsVooruit(unsigned int);
+    virtual void rechtsAchteruit(unsigned int);
+protected:
     static constexpr volatile uint8_t * const uDDRD = (volatile uint8_t *)0x2a;
     static constexpr volatile uint8_t * const uPORTD = (volatile uint8_t *)0x2b;
+};
+
+class PWMPLLMotor : public Motor
+{
+public:
+    PWMPLLMotor();
+    void linksVooruit(unsigned int);
+    void linksAchteruit(unsigned int);
 };
 
 class Robot
@@ -103,7 +111,7 @@ class Robot
 public:
     Robot();
     static void blink();
-    static void command(char *);
+    void command(char *);
 private:
     PanTilt *pt;
     ComPort *comPort;
