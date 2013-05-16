@@ -91,6 +91,7 @@ Robot::Robot()
 {
     pt = new PanTilt();
     comPort = new ComPort();
+    motor = new Motor();
     comPort->poets("Lorem ipsum");
 }
 
@@ -121,6 +122,41 @@ void Robot::command(char *cmd)
 
     if (strcmp(commando, "t") == 0)
         TiltServo::moveTo(deg);
+
+    if (strcmp(commando, "q") == 0)
+        Motor::linksVooruit(deg);
+
+    if (strcmp(commando, "a") == 0)
+        Motor::linksAchteruit(deg);
+
+    if (strcmp(commando, "w") == 0)
+        Motor::rechtsVooruit(deg);
+
+    if (strcmp(commando, "s") == 0)
+        Motor::rechtsAchteruit(deg);
+}
+
+Motor::Motor()
+{
+    *uDDRD |= (1<<5) | (1<<6);
+}
+
+void Motor::linksVooruit(unsigned int speed)
+{
+}
+
+void Motor::linksAchteruit(unsigned int speed)
+{
+    *uPORTD |= (1<<5);
+}
+
+void Motor::rechtsVooruit(unsigned int speed)
+{
+}
+
+void Motor::rechtsAchteruit(unsigned int speed)
+{
+    *uPORTD |= (1<<6);
 }
 
 void __vector_18()

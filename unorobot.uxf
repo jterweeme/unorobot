@@ -12,6 +12,7 @@
 --
 -pt: PanTilt
 -comPort: ComPort
+-motor: Motor
 --
 +Robot()
 _+blink(): void_
@@ -170,5 +171,29 @@ _-getBuffer(): char *_</panel_attributes>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>30;90;30;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>940</x>
+      <y>710</y>
+      <w>220</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>*Motor*
+--
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>1020</x>
+      <y>630</y>
+      <w>50</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>30;30;30;80</additional_attributes>
   </element>
 </diagram>

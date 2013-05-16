@@ -89,6 +89,13 @@ class Motor
 {
 public:
     Motor();
+    static void linksVooruit(unsigned int);
+    static void linksAchteruit(unsigned int);
+    static void rechtsVooruit(unsigned int);
+    static void rechtsAchteruit(unsigned int);
+private:
+    static constexpr volatile uint8_t * const uDDRD = (volatile uint8_t *)0x2a;
+    static constexpr volatile uint8_t * const uPORTD = (volatile uint8_t *)0x2b;
 };
 
 class Robot
