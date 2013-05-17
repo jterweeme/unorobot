@@ -152,13 +152,20 @@ void Motor::linksVooruit(unsigned int speed)
 
 void PWMPLLMotor::linksVooruit(unsigned int speed)
 {
-    *uPORTD |= (1<<4) | (1<<5);
+    if (speed > 20)
+        *uPORTD |= (1<<4) | (1<<5);
+    else
+        *uPORTD &= ~(1<<5);
 }
 
 void PWMPLLMotor::linksAchteruit(unsigned int speed)
 {
     *uPORTD &= ~(1<<4);
-    *uPORTD |= (1<<5);
+
+    if (speed > 20)
+        *uPORTD |= (1<<5);
+    else
+        *uPORTD &= ~(1<<5);
 }
 
 void Motor::linksAchteruit(unsigned int speed)
@@ -167,12 +174,19 @@ void Motor::linksAchteruit(unsigned int speed)
 
 void Motor::rechtsVooruit(unsigned int speed)
 {
-    *uPORTD |= (1<<6) | (1<<7);
+    if (speed > 20)
+        *uPORTD |= (1<<6) | (1<<7);
+    else
+        *uPORTD &= ~(1<<6);
 }
 
 void Motor::rechtsAchteruit(unsigned int speed)
 {
-    *uPORTD |= (1<<6);
+    if (speed > 20)
+        *uPORTD |= (1<<6);
+    else
+        *uPORTD &= ~(1<<6);
+    
     *uPORTD &= ~(1<<7);
 }
 
