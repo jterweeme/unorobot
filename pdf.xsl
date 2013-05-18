@@ -28,16 +28,18 @@
     </xsl:template>
 
     <xsl:template match="figure">
-        <fo:block>
-            <fo:external-graphic>
-                <xsl:attribute name="src">
-                    <xsl:value-of select="img/@src"/>
-                </xsl:attribute>
-                <xsl:attribute name="content-width">
-                    <xsl:value-of select="img/@content-width"/>
-                </xsl:attribute>
-            </fo:external-graphic>
-        </fo:block>
+        <xsl:for-each select="img">
+            <fo:block>
+                <fo:external-graphic>
+                    <xsl:attribute name="src">
+                        <xsl:value-of select="@src"/>
+                    </xsl:attribute>
+                    <xsl:attribute name="content-width">
+                        <xsl:value-of select="@content-width"/>
+                    </xsl:attribute>
+                </fo:external-graphic>
+            </fo:block>
+        </xsl:for-each>
     </xsl:template>
 
     <xsl:template match="h1">

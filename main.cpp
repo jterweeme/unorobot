@@ -7,7 +7,7 @@ Robot *g_robot;
 
 ComPort::ComPort()
 {
-    *UUBRR0L = 103;
+    *baudRateRegister = 103;
     *UUCSR0B = (1<<UTXEN0) | (1<<uRXEN0) | (1<<uRXCIE0);
     asm volatile ("sei" ::: "memory");
 }
@@ -62,19 +62,20 @@ int ComPort::addToBuffer(char c)
 
 PanServo::PanServo()
 {
-    *uDDRB |= (1<<1) | (1<<2) | (1<<3) | (1<<5);
+    *dataDirectionB |= (1<<ARDUINO_D9);
     *uTCCR1A = (1<<UWGM00) | (1<<UWGM01) | (1<<UCOM1A1) | (1<<UCS01) | (1<<UCS00);
     *UNOTCCR1B = (1<<UWGM00) | (1<<UWGM01) | (1<<UCOM1A1) | (1<<UCS01) | (1<<UCS00);
-    *output = 244;
-    *UNOOCR1B = 244;
+    *output = 200;
+    *UNOOCR1B = 144;
 }
 
 TiltServo::TiltServo()
 {
+    *dataDirectionB |= (1<<ARDUINO_D11);
     *uTCCR2A = (1<<UWGM00) | (1<<UWGM01) | (1<<UCOM1A1) | (1<<UCS01) | (1<<UCS00);
     *uTCCR2B = (1<<UWGM00) | (1<<UWGM01) | (1<<UCOM1A1) | (1<<UCS01) | (1<<UCS00);
     *uOCR2A = 244;
-    *uOCR2B = 244;
+    *uOCR2B = 144;
 
 }
 
@@ -143,7 +144,7 @@ PWMPLLMotor::PWMPLLMotor() : Motor()
 
 Motor::Motor()
 {
-    *uDDRD |= (1<<4) | (1<<5) | (1<<6);
+    *dataDirectionD |= (1<<4) | (1<<5) | (1<<6);
 }
 
 void Motor::linksVooruit(unsigned int speed)
@@ -153,19 +154,19 @@ void Motor::linksVooruit(unsigned int speed)
 void PWMPLLMotor::linksVooruit(unsigned int speed)
 {
     if (speed > 20)
-        *uPORTD |= (1<<4) | (1<<5);
+        *portD |= (1<<4) | (1<<5);
     else
-        *uPORTD &= ~(1<<5);
+        *portD &= ~(1<<5);
 }
 
 void PWMPLLMotor::linksAchteruit(unsigned int speed)
 {
-    *uPORTD &= ~(1<<4);
+    *portD &= ~(1<<4);
 
     if (speed > 20)
-        *uPORTD |= (1<<5);
+        *portD |= (1<<5);
     else
-        *uPORTD &= ~(1<<5);
+        *portD &= ~(1<<5);
 }
 
 void Motor::linksAchteruit(unsigned int speed)
@@ -175,19 +176,31 @@ void Motor::linksAchteruit(unsigned int speed)
 void Motor::rechtsVooruit(unsigned int speed)
 {
     if (speed > 20)
-        *uPORTD |= (1<<6) | (1<<7);
+        *portD |= (1<<6) | (1<<7);
     else
-        *uPORTD &= ~(1<<6);
+        *portD &= ~(1<<6);
 }
 
 void Motor::rechtsAchteruit(unsigned int speed)
 {
     if (speed > 20)
-        *uPORTD |= (1<<6);
+        *portD |= (1<<6);
     else
-        *uPORTD &= ~(1<<6);
+        *portD &= ~(1<<6);
     
-    *uPORTD &= ~(1<<7);
+    *portD &= ~(1<<7);
+}
+
+Sonic::Sonic()
+{
+}
+
+unsigned int Sonic::sense()
+{
+}
+
+void __vector_10()
+{
 }
 
 void __vector_18()

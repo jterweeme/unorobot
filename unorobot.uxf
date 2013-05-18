@@ -3,29 +3,30 @@
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>940</x>
-      <y>510</y>
+      <x>640</x>
+      <y>490</y>
       <w>220</w>
-      <h>150</h>
+      <h>160</h>
     </coordinates>
     <panel_attributes>*Robot*
 --
 -pt: PanTilt
 -comPort: ComPort
 -motor: Motor
+-sonic: Sonic
 --
 +Robot()
 _+blink(): void_
-_+command(): void_</panel_attributes>
++command(): void</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>630</x>
-      <y>510</y>
+      <x>330</x>
+      <y>490</y>
       <w>240</w>
-      <h>150</h>
+      <h>160</h>
     </coordinates>
     <panel_attributes>*PanTilt*
 --
@@ -38,8 +39,8 @@ _+command(): void_</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>840</x>
-      <y>550</y>
+      <x>540</x>
+      <y>530</y>
       <w>120</w>
       <h>50</h>
     </coordinates>
@@ -49,8 +50,8 @@ _+command(): void_</panel_attributes>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>630</x>
-      <y>190</y>
+      <x>330</x>
+      <y>170</y>
       <w>240</w>
       <h>80</h>
     </coordinates>
@@ -64,8 +65,8 @@ _#uWGM00: uint8_t_
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>630</x>
-      <y>330</y>
+      <x>330</x>
+      <y>310</y>
       <w>110</w>
       <h>120</h>
     </coordinates>
@@ -81,8 +82,8 @@ _+moveTo()_</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>650</x>
-      <y>240</y>
+      <x>350</x>
+      <y>220</y>
       <w>50</w>
       <h>110</h>
     </coordinates>
@@ -92,8 +93,8 @@ _+moveTo()_</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>650</x>
-      <y>420</y>
+      <x>350</x>
+      <y>400</y>
       <w>50</w>
       <h>110</h>
     </coordinates>
@@ -103,8 +104,8 @@ _+moveTo()_</panel_attributes>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>760</x>
-      <y>330</y>
+      <x>460</x>
+      <y>310</y>
       <w>110</w>
       <h>120</h>
     </coordinates>
@@ -120,8 +121,8 @@ _+moveTo()_</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>790</x>
-      <y>420</y>
+      <x>490</x>
+      <y>400</y>
       <w>50</w>
       <h>110</h>
     </coordinates>
@@ -131,8 +132,8 @@ _+moveTo()_</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>790</x>
-      <y>240</y>
+      <x>490</x>
+      <y>220</y>
       <w>50</w>
       <h>110</h>
     </coordinates>
@@ -142,14 +143,14 @@ _+moveTo()_</panel_attributes>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>940</x>
-      <y>190</y>
+      <x>640</x>
+      <y>170</y>
       <w>220</w>
       <h>260</h>
     </coordinates>
     <panel_attributes>*ComPort*
 --
-_-uUDR0_
+_-uUDR0: register_
 _-buffer: char[200]_
 _-buffer_ptr: uint8_t_
 --
@@ -164,8 +165,8 @@ _-getBuffer(): char *_</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>1020</x>
-      <y>420</y>
+      <x>720</x>
+      <y>400</y>
       <w>50</w>
       <h>110</h>
     </coordinates>
@@ -175,31 +176,85 @@ _-getBuffer(): char *_</panel_attributes>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>940</x>
-      <y>710</y>
+      <x>640</x>
+      <y>700</y>
       <w>220</w>
       <h>150</h>
     </coordinates>
     <panel_attributes>*Motor*
 --
-_-uDDRD_
-_-uPORTD_
+_-dataDirectionD: register_
+_-portD: register_
 --
-_+linksVooruit(): void_
-_+linksAchteruit(): void_
-_+rechtsVooruit(): void_
-_+rechtsAchteruit(): void_</panel_attributes>
++linksVooruit(): void
++linksAchteruit(): void
++rechtsVooruit(): void
++rechtsAchteruit(): void</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>1020</x>
-      <y>630</y>
+      <x>720</x>
+      <y>620</y>
       <w>50</w>
       <h>100</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>30;30;30;80</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>920</x>
+      <y>490</y>
+      <w>200</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>*Sonic*
+--
+--
++Sonic()
++sense()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>830</x>
+      <y>530</y>
+      <w>110</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>30;30;90;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>330</x>
+      <y>700</y>
+      <w>230</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>*PWMPLLMotor*
+--
+--
++linksVooruit(): void
++linksAchteruit(): void
++rechtsVooruit(): void
++rechtsAchteruit(): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>530</x>
+      <y>710</y>
+      <w>130</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>110;30;30;30</additional_attributes>
   </element>
 </diagram>

@@ -1,4 +1,4 @@
-all: main.hex
+all: main.hex documentation.pdf
 
 main.hex: main
 	avr-objcopy -O ihex -R .eeprom $< $@
@@ -17,6 +17,9 @@ unorobot.svg: unorobot.uxf
 
 documentation.pdf: documentation.xml pdf.xsl unorobot.svg
 	fop -xsl pdf.xsl -xml documentation.xml -pdf $@
+
+clean:
+	rm -v documentation.pdf main.o main
 
 
 

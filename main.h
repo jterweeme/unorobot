@@ -3,7 +3,8 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-extern "C" void __vector_18() __attribute__ ((signal, used, externally_visible));
+extern "C" void __vector_10() __attribute__ ((signal, used, externally_visible)); //TIMER1_CAPT
+extern "C" void __vector_18() __attribute__ ((signal, used, externally_visible)); //USART_RX
 
 inline void * operator new (size_t size)
 {
@@ -26,7 +27,7 @@ private:
     static uint8_t last_buffer_ptr;
 
     static constexpr volatile uint8_t * const uUDR0   = (volatile uint8_t *)0xc6;
-    static constexpr volatile uint8_t * const UUBRR0L = (volatile uint8_t *)0xc4;
+    static constexpr volatile uint8_t * const baudRateRegister = (volatile uint8_t *)0xc4;
     static constexpr volatile uint8_t * const uUCSR0A = (volatile uint8_t *)0xc0;
     static constexpr volatile uint8_t * const UUCSR0B = (volatile uint8_t *)0xc1;
 
@@ -40,7 +41,7 @@ class Servo
 public:
     Servo();
 protected:
-    static constexpr volatile uint8_t * const uDDRB   = (volatile uint8_t *)0x24;
+    static constexpr volatile uint8_t * const dataDirectionB = (volatile uint8_t *)0x24;
     static const uint8_t UWGM00  = 0;
     static const uint8_t UWGM01  = 1;
     static const uint8_t UCOM1A1 = 7;
@@ -60,7 +61,7 @@ private:
     static constexpr volatile uint8_t * const UNOTCCR1B = (volatile uint8_t *)0x81;
     static constexpr volatile uint8_t * const output = (volatile uint8_t *)0x88;
     static constexpr volatile uint8_t * const UNOOCR1B  = (volatile uint8_t *)0x8a;
-
+    static const uint8_t ARDUINO_D9 = 1;    // PB1
 };
 
 class TiltServo : public Servo
@@ -73,7 +74,7 @@ private:
     static constexpr volatile uint8_t * const uTCCR2B = (volatile uint8_t *)0xb1;
     static constexpr volatile uint8_t * const uOCR2A  = (volatile uint8_t *)0xb3;
     static constexpr volatile uint8_t * const uOCR2B  = (volatile uint8_t *)0xb4;
-
+    static const uint8_t ARDUINO_D11 = 3;   // PB3
 };
 
 class PanTilt
@@ -94,8 +95,8 @@ public:
     virtual void rechtsVooruit(unsigned int);
     virtual void rechtsAchteruit(unsigned int);
 protected:
-    static constexpr volatile uint8_t * const uDDRD = (volatile uint8_t *)0x2a;
-    static constexpr volatile uint8_t * const uPORTD = (volatile uint8_t *)0x2b;
+    static constexpr volatile uint8_t * const dataDirectionD = (volatile uint8_t *)0x2a;
+    static constexpr volatile uint8_t * const portD = (volatile uint8_t *)0x2b;
 };
 
 class PWMPLLMotor : public Motor
@@ -118,6 +119,13 @@ private:
     Motor *motor;
     static constexpr volatile uint8_t * const uPORTB = (volatile uint8_t *)0x25;
 
+};
+
+class Sonic
+{
+public:
+    Sonic();
+    unsigned int sense();
 };
 
 #endif
