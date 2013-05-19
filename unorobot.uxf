@@ -4,9 +4,9 @@
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>610</x>
-      <y>400</y>
+      <y>350</y>
       <w>220</w>
-      <h>210</h>
+      <h>220</h>
     </coordinates>
     <panel_attributes>*Robot*
 --
@@ -16,9 +16,10 @@
 _-portB: register_
 _-dataDirectionB: register_
 -sonic: Sonic
+-tripMeter: TripMeter
 --
 +Robot()
-_+blink(): void_
++blink(): void
 +command(): void
 +loop(): int</panel_attributes>
     <additional_attributes/>
@@ -27,23 +28,25 @@ _+blink(): void_
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>300</x>
-      <y>400</y>
+      <y>350</y>
       <w>240</w>
-      <h>210</h>
+      <h>120</h>
     </coordinates>
     <panel_attributes>*PanTilt*
 --
--pan: PanServo
--tilt: TiltServo
+-panServo: PanServo
+-tiltServo: TiltServo
 --
-+PanTilt()</panel_attributes>
++PanTilt()
++pan(): void
++tilt(): void</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>510</x>
-      <y>450</y>
+      <y>400</y>
       <w>120</w>
       <h>50</h>
     </coordinates>
@@ -54,7 +57,7 @@ _+blink(): void_
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>300</x>
-      <y>90</y>
+      <y>40</y>
       <w>240</w>
       <h>80</h>
     </coordinates>
@@ -69,7 +72,7 @@ _#uWGM00: uint8_t_
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>300</x>
-      <y>230</y>
+      <y>180</y>
       <w>110</w>
       <h>120</h>
     </coordinates>
@@ -79,14 +82,14 @@ _-uTCCR1A_
 _-output_
 --
 +PanServo()
-_+moveTo()_</panel_attributes>
++moveTo()</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>320</x>
-      <y>140</y>
+      <y>90</y>
       <w>50</w>
       <h>110</h>
     </coordinates>
@@ -97,7 +100,7 @@ _+moveTo()_</panel_attributes>
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>320</x>
-      <y>320</y>
+      <y>270</y>
       <w>50</w>
       <h>100</h>
     </coordinates>
@@ -108,7 +111,7 @@ _+moveTo()_</panel_attributes>
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>430</x>
-      <y>230</y>
+      <y>180</y>
       <w>110</w>
       <h>120</h>
     </coordinates>
@@ -118,14 +121,14 @@ _-uTCCR2A_
 _-output_
 --
 +TiltServo()
-_+moveTo()_</panel_attributes>
++moveTo()</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>460</x>
-      <y>320</y>
+      <y>270</y>
       <w>50</w>
       <h>100</h>
     </coordinates>
@@ -136,7 +139,7 @@ _+moveTo()_</panel_attributes>
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>460</x>
-      <y>140</y>
+      <y>90</y>
       <w>50</w>
       <h>110</h>
     </coordinates>
@@ -147,7 +150,7 @@ _+moveTo()_</panel_attributes>
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>610</x>
-      <y>90</y>
+      <y>40</y>
       <w>220</w>
       <h>260</h>
     </coordinates>
@@ -156,6 +159,7 @@ _+moveTo()_</panel_attributes>
 _-uUDR0: register_
 _-buffer: char[200]_
 _-buffer_ptr: uint8_t_
+_-baudRateRegister: register_
 --
 +ComPort()
 +poets(s: string): void
@@ -169,7 +173,7 @@ _-getBuffer(): char *_</panel_attributes>
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>690</x>
-      <y>320</y>
+      <y>270</y>
       <w>50</w>
       <h>100</h>
     </coordinates>
@@ -180,7 +184,7 @@ _-getBuffer(): char *_</panel_attributes>
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>610</x>
-      <y>660</y>
+      <y>620</y>
       <w>220</w>
       <h>150</h>
     </coordinates>
@@ -199,7 +203,7 @@ _-portD: register_
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>690</x>
-      <y>580</y>
+      <y>540</y>
       <w>50</w>
       <h>100</h>
     </coordinates>
@@ -210,7 +214,7 @@ _-portD: register_
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>890</x>
-      <y>400</y>
+      <y>350</y>
       <w>200</w>
       <h>210</h>
     </coordinates>
@@ -229,7 +233,7 @@ _+sense(): void_
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>800</x>
-      <y>450</y>
+      <y>400</y>
       <w>110</w>
       <h>50</h>
     </coordinates>
@@ -240,7 +244,7 @@ _+sense(): void_
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>300</x>
-      <y>660</y>
+      <y>620</y>
       <w>230</w>
       <h>150</h>
     </coordinates>
@@ -257,11 +261,38 @@ _+sense(): void_
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>500</x>
-      <y>670</y>
+      <y>630</y>
       <w>130</w>
       <h>50</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>110;30;30;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>300</x>
+      <y>490</y>
+      <w>240</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>*TripMeter*
+--
+-left: int
+-right: int
+--
++TripMeter()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>510</x>
+      <y>500</y>
+      <w>120</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>100;30;30;30</additional_attributes>
   </element>
 </diagram>

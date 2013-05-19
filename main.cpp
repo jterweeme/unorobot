@@ -86,16 +86,21 @@ Servo::Servo()
 
 PanTilt::PanTilt()
 {
-    pan = new PanServo();
-    tilt = new TiltServo();
+}
+
+void PanTilt::pan(int deg)
+{
+    panServo.moveTo(deg);
+}
+
+void PanTilt::tilt(int deg)
+{
+    tiltServo.moveTo(deg);
 }
 
 Robot::Robot()
 {
-    pt = new PanTilt();
-    comPort = new ComPort();
-    //motor = new PWMPLLMotor();
-    comPort->poets("Lorem ipsum");
+    comPort.poets("StartUp...");
     sonic = new Sonic();
     *dataDirectionB |= (1<<5);
 }
@@ -116,6 +121,11 @@ void Robot::blink()
     *portB ^= (1<<5);
 }
 
+ComPort *Robot::getComPort()
+{
+    return &comPort;
+}
+
 void Robot::command(char *cmd)
 {
     char *commando = strtok((char *)cmd, " ,.-\r");
@@ -123,10 +133,10 @@ void Robot::command(char *cmd)
     unsigned int deg = atoi(parameter);
     
     if (strcmp(commando, "p") == 0)
-        PanServo::moveTo(deg);
+        pt.pan(deg);
 
     if (strcmp(commando, "t") == 0)
-        TiltServo::moveTo(deg);
+        pt.tilt(deg);
 
     if (strcmp(commando, "q") == 0)
         motor.linksVooruit(deg);
@@ -237,7 +247,7 @@ void Sonic::sense()
         *counter = 0;
         char s[30];
         sprintf(s, "%d\r\n", pulse_width);
-        ComPort::poets(s);
+        //ComPort::poets(s);
     }
 }
 
@@ -248,7 +258,7 @@ void __vector_10()
 
 void __vector_18()
 {
-    ComPort::onReceive();
+    g_robot.getComPort()->onReceive();
 }
 
 int main()

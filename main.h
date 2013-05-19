@@ -17,9 +17,9 @@ class ComPort
 {
 public:
     ComPort();
-    static void poets(const char *s);
+    void poets(const char *s);
     static void putcee(char);
-    static void onReceive();
+    void onReceive();
 private:
     static int addToBuffer(char);
     static char *getBuffer();
@@ -56,8 +56,8 @@ class PanServo : public Servo
 {
 public:
     PanServo();
-    static void move();
-    static void moveTo(uint8_t);
+    void move();
+    void moveTo(uint8_t);
 private:
     static constexpr hwAddr const uTCCR1A   = (hwAddr)0x80;
     static constexpr hwAddr const UNOTCCR1B = (hwAddr)0x81;
@@ -70,7 +70,7 @@ class TiltServo : public Servo
 {
 public:
     TiltServo();
-    static void moveTo(uint8_t);
+    void moveTo(uint8_t);
 private:
     static constexpr hwAddr const uTCCR2A = (volatile uint8_t *)0xb0;
     static constexpr hwAddr const uTCCR2B = (volatile uint8_t *)0xb1;
@@ -83,9 +83,11 @@ class PanTilt
 {
 public:
     PanTilt();
+    void pan(int);
+    void tilt(int);
 private:
-    Servo *pan;
-    Servo *tilt;
+    PanServo panServo;
+    TiltServo tiltServo;
 };
 
 class Motor
@@ -99,6 +101,12 @@ public:
 protected:
     static constexpr hwAddr const dataDirectionD = (hwAddr)0x2a;
     static constexpr hwAddr const portD = (hwAddr)0x2b;
+};
+
+class TripMeter
+{
+public:
+    TripMeter();
 };
 
 class PWMPLLMotor : public Motor
@@ -118,9 +126,10 @@ public:
     void blink();
     void command(char *);
     int loop();
+    ComPort *getComPort();
 private:
-    PanTilt *pt;
-    ComPort *comPort;
+    PanTilt pt;
+    ComPort comPort;
     PWMPLLMotor motor;
     static constexpr hwAddr const portB = (hwAddr)0x25;
     static constexpr hwAddr const dataDirectionB = (hwAddr)0x24;
