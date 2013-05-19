@@ -1,9 +1,10 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
 #include "main.h"
 
-Robot *g_robot;
+Robot g_robot;
 
 ComPort::ComPort()
 {
@@ -93,8 +94,10 @@ Robot::Robot()
 {
     pt = new PanTilt();
     comPort = new ComPort();
-    motor = new PWMPLLMotor();
+    //motor = new PWMPLLMotor();
     comPort->poets("Lorem ipsum");
+    sonic = new Sonic();
+    *dataDirectionB |= (1<<5);
 }
 
 char *ComPort::getBuffer()
@@ -105,12 +108,12 @@ char *ComPort::getBuffer()
 void ComPort::onReceive()
 {
     if (addToBuffer(*uUDR0) == 1)
-        g_robot->command(getBuffer());
+        g_robot.command(getBuffer());
 }
 
 void Robot::blink()
 {
-    *uPORTB ^= (1<<5);
+    *portB ^= (1<<5);
 }
 
 void Robot::command(char *cmd)
@@ -126,16 +129,27 @@ void Robot::command(char *cmd)
         TiltServo::moveTo(deg);
 
     if (strcmp(commando, "q") == 0)
-        motor->linksVooruit(deg);
+        motor.linksVooruit(deg);
 
     if (strcmp(commando, "a") == 0)
-        motor->linksAchteruit(deg);
+        motor.linksAchteruit(deg);
 
     if (strcmp(commando, "w") == 0)
-        motor->rechtsVooruit(deg);
+        motor.rechtsVooruit(deg);
 
     if (strcmp(commando, "s") == 0)
-        motor->rechtsAchteruit(deg);
+        motor.rechtsAchteruit(deg);
+
+    if (strcmp(commando, "d") == 0)
+        sonic->trigger();
+}
+
+int Robot::loop()
+{
+    while (true) {
+    }
+
+    return 0;
 }
 
 PWMPLLMotor::PWMPLLMotor() : Motor()
@@ -175,6 +189,7 @@ void Motor::linksAchteruit(unsigned int speed)
 
 void Motor::rechtsVooruit(unsigned int speed)
 {
+    g_robot.blink();
     if (speed > 20)
         *portD |= (1<<6) | (1<<7);
     else
@@ -193,14 +208,42 @@ void Motor::rechtsAchteruit(unsigned int speed)
 
 Sonic::Sonic()
 {
+    *dataDirectionB &= ~(1<<0);
+    *dataDirectionB |= (1<<4);
+    *interruptFlags = 0;
+    //*timerFlags |= (1<<
 }
 
-unsigned int Sonic::sense()
+unsigned int Sonic::trigger()
 {
+    *portB |= (1<<4);
+    *portB &= ~(1<<4);
+}
+
+uint16_t Sonic::pulse_start;
+uint16_t Sonic::pulse_width;
+
+void Sonic::sense()
+{
+    if (*inputB & (1<<0))
+    {
+        pulse_start = *inputCapture;
+        *timerFlags &= ~(1<<ICES1);
+    }
+    else
+    {
+        pulse_width = *inputCapture - pulse_start;
+        *timerFlags |= (1<<ICES1);
+        *counter = 0;
+        char s[30];
+        sprintf(s, "%d\r\n", pulse_width);
+        ComPort::poets(s);
+    }
 }
 
 void __vector_10()
 {
+    Sonic::sense();
 }
 
 void __vector_18()
@@ -210,11 +253,7 @@ void __vector_18()
 
 int main()
 {
-    g_robot = new Robot();
-    while (true) {
-    }
-
-    return 0;
+    return g_robot.loop();
 }
 
 
