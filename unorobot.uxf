@@ -6,7 +6,7 @@
       <x>610</x>
       <y>350</y>
       <w>220</w>
-      <h>220</h>
+      <h>280</h>
     </coordinates>
     <panel_attributes>*Robot*
 --
@@ -21,7 +21,10 @@ _-dataDirectionB: register_
 +Robot()
 +blink(): void
 +command(): void
-+loop(): int</panel_attributes>
++loop(): int
++getComPort(): ComPort
++getTripMeter(): TripMeter
++getSonic(): Sonic</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -164,9 +167,9 @@ _-baudRateRegister: register_
 +ComPort()
 +poets(s: string): void
 +putcee(c: char): void
-_+onReceive(): void_
-_-addToBuffer(): void_
-_-getBuffer(): char *_</panel_attributes>
++onReceive(): void
+-addToBuffer(): void
+-getBuffer(): char *</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -184,7 +187,7 @@ _-getBuffer(): char *_</panel_attributes>
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>610</x>
-      <y>620</y>
+      <y>680</y>
       <w>220</w>
       <h>150</h>
     </coordinates>
@@ -203,7 +206,7 @@ _-portD: register_
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>690</x>
-      <y>540</y>
+      <y>600</y>
       <w>50</w>
       <h>100</h>
     </coordinates>
@@ -216,7 +219,7 @@ _-portD: register_
       <x>890</x>
       <y>350</y>
       <w>200</w>
-      <h>210</h>
+      <h>280</h>
     </coordinates>
     <panel_attributes>*Sonic*
 --
@@ -225,7 +228,7 @@ _-dataDirectionB: register_
 _-inputCapture: register_
 --
 +Sonic()
-_+sense(): void_
++sense(): void
 +trigger()</panel_attributes>
     <additional_attributes/>
   </element>
@@ -244,8 +247,8 @@ _+sense(): void_
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>300</x>
-      <y>620</y>
-      <w>230</w>
+      <y>680</y>
+      <w>240</w>
       <h>150</h>
     </coordinates>
     <panel_attributes>*PWMPLLMotor*
@@ -260,13 +263,13 @@ _+sense(): void_
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>500</x>
-      <y>630</y>
-      <w>130</w>
+      <x>510</x>
+      <y>690</y>
+      <w>120</w>
       <h>50</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>110;30;30;30</additional_attributes>
+    <additional_attributes>100;30;30;30</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
@@ -274,7 +277,7 @@ _+sense(): void_
       <x>300</x>
       <y>490</y>
       <w>240</w>
-      <h>80</h>
+      <h>140</h>
     </coordinates>
     <panel_attributes>*TripMeter*
 --

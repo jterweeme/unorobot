@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+extern "C" void __vector_1()  __attribute__ ((signal, used, externally_visible)); //INT0
 extern "C" void __vector_10() __attribute__ ((signal, used, externally_visible)); //TIMER1_CAPT
 extern "C" void __vector_18() __attribute__ ((signal, used, externally_visible)); //USART_RX
 
@@ -18,11 +19,11 @@ class ComPort
 public:
     ComPort();
     void poets(const char *s);
-    static void putcee(char);
+    void putcee(char);
     void onReceive();
 private:
-    static int addToBuffer(char);
-    static char *getBuffer();
+    int addToBuffer(char);
+    char *getBuffer();
 
     static char buffer[200];
     static uint8_t buffer_ptr;
@@ -107,6 +108,15 @@ class TripMeter
 {
 public:
     TripMeter();
+    void countLeft();
+    void countRight();
+    unsigned int read();
+private:
+    unsigned int left;
+    unsigned int right;
+    static constexpr hwAddr const portD = (hwAddr)0x2b;
+    static constexpr hwAddr const eimsk = (hwAddr)0x3d;
+    static constexpr hwAddr const eicra = (hwAddr)0x69;
 };
 
 class PWMPLLMotor : public Motor
@@ -117,31 +127,13 @@ public:
     void linksAchteruit(unsigned int);
 };
 
-class Sonic;
-
-class Robot
-{
-public:
-    Robot();
-    void blink();
-    void command(char *);
-    int loop();
-    ComPort *getComPort();
-private:
-    PanTilt pt;
-    ComPort comPort;
-    PWMPLLMotor motor;
-    static constexpr hwAddr const portB = (hwAddr)0x25;
-    static constexpr hwAddr const dataDirectionB = (hwAddr)0x24;
-    Sonic *sonic;
-};
-
 class Sonic
 {
 public:
     Sonic();
     unsigned int trigger();
-    static void sense();
+    void sense();
+    unsigned long pulseIn();
 private:
     static uint16_t pulse_start;
     static uint16_t pulse_width;
@@ -155,6 +147,25 @@ private:
     static const uint8_t ICES1 = 6;
 };
 
+class Robot
+{
+public:
+    Robot();
+    void blink();
+    void command(char *);
+    int loop();
+    ComPort *getComPort();
+    TripMeter *getTripMeter();
+    Sonic *getSonic();
+private:
+    PanTilt pt;
+    ComPort comPort;
+    PWMPLLMotor motor;
+    static constexpr hwAddr const portB = (hwAddr)0x25;
+    static constexpr hwAddr const dataDirectionB = (hwAddr)0x24;
+    Sonic sonic;
+    TripMeter tripMeter;
+};
 #endif
 
 

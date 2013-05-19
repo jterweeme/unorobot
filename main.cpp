@@ -100,8 +100,7 @@ void PanTilt::tilt(int deg)
 
 Robot::Robot()
 {
-    comPort.poets("StartUp...");
-    sonic = new Sonic();
+    comPort.poets("StartUp...\r\n");
     *dataDirectionB |= (1<<5);
 }
 
@@ -124,6 +123,16 @@ void Robot::blink()
 ComPort *Robot::getComPort()
 {
     return &comPort;
+}
+
+Sonic *Robot::getSonic()
+{
+    return &sonic;
+}
+
+unsigned long Sonic::pulseIn()
+{
+    return 0;
 }
 
 void Robot::command(char *cmd)
@@ -151,7 +160,19 @@ void Robot::command(char *cmd)
         motor.rechtsAchteruit(deg);
 
     if (strcmp(commando, "d") == 0)
-        sonic->trigger();
+        sonic.trigger();
+
+    if (strcmp(commando, "o") == 0)
+    {
+        char s[30];
+        sprintf(s, "%d\r\n", tripMeter.read());
+        comPort.poets(s);
+    }
+}
+
+TripMeter *Robot::getTripMeter()
+{
+    return &tripMeter;
 }
 
 int Robot::loop()
@@ -216,6 +237,30 @@ void Motor::rechtsAchteruit(unsigned int speed)
     *portD &= ~(1<<7);
 }
 
+TripMeter::TripMeter()
+{
+    left = 0;
+    right = 0;
+    *portD |= (1<<2);
+    *eicra |= (1<<1);
+    *eimsk |= (1<<0);
+}
+
+void TripMeter::countLeft()
+{
+    left++;
+}
+
+void TripMeter::countRight()
+{
+    right++;
+}
+
+unsigned int TripMeter::read()
+{
+    return left;
+}
+
 Sonic::Sonic()
 {
     *dataDirectionB &= ~(1<<0);
@@ -226,8 +271,10 @@ Sonic::Sonic()
 
 unsigned int Sonic::trigger()
 {
-    *portB |= (1<<4);
     *portB &= ~(1<<4);
+    *portB |= (1<<4);
+    unsigned long distanceMeasured = pulseIn();
+    return 0;
 }
 
 uint16_t Sonic::pulse_start;
@@ -235,25 +282,17 @@ uint16_t Sonic::pulse_width;
 
 void Sonic::sense()
 {
-    if (*inputB & (1<<0))
-    {
-        pulse_start = *inputCapture;
-        *timerFlags &= ~(1<<ICES1);
-    }
-    else
-    {
-        pulse_width = *inputCapture - pulse_start;
-        *timerFlags |= (1<<ICES1);
-        *counter = 0;
-        char s[30];
-        sprintf(s, "%d\r\n", pulse_width);
-        //ComPort::poets(s);
-    }
+    
+}
+
+void __vector_1()
+{
+    g_robot.getTripMeter()->countLeft();
 }
 
 void __vector_10()
 {
-    Sonic::sense();
+    g_robot.getSonic()->sense();
 }
 
 void __vector_18()
