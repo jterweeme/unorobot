@@ -275,16 +275,20 @@ _-inputCapture: register_
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>300</x>
-      <y>490</y>
+      <y>480</y>
       <w>240</w>
-      <h>140</h>
+      <h>150</h>
     </coordinates>
     <panel_attributes>*TripMeter*
 --
 -left: int
 -right: int
 --
-+TripMeter()</panel_attributes>
++TripMeter()
++countLeft(): void
++countRight(): void
++read(): int
++readRight(): int</panel_attributes>
     <additional_attributes/>
   </element>
   <element>

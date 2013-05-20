@@ -4,6 +4,7 @@
 #include <stdlib.h>
 
 extern "C" void __vector_1()  __attribute__ ((signal, used, externally_visible)); //INT0
+extern "C" void __vector_2()  __attribute__ ((signal, used, externally_visible)); //INT1
 extern "C" void __vector_10() __attribute__ ((signal, used, externally_visible)); //TIMER1_CAPT
 extern "C" void __vector_18() __attribute__ ((signal, used, externally_visible)); //USART_RX
 
@@ -111,12 +112,16 @@ public:
     void countLeft();
     void countRight();
     unsigned int read();
+    unsigned int readRight();
 private:
     unsigned int left;
     unsigned int right;
     static constexpr hwAddr const portD = (hwAddr)0x2b;
     static constexpr hwAddr const eimsk = (hwAddr)0x3d;
     static constexpr hwAddr const eicra = (hwAddr)0x69;
+    static const uint8_t ISC01 = 1;
+    static const uint8_t INT0 = 0;
+    static const uint8_t INT1 = 1;
 };
 
 class PWMPLLMotor : public Motor

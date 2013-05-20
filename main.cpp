@@ -26,18 +26,15 @@ void ComPort::putcee(char c)
 }
 
 void PanServo::move()
-{
-    (*output)--;
+{   (*output)--;
 }
 
 void PanServo::moveTo(uint8_t deg)
-{
-    *output = deg;
+{   *output = deg;
 }
 
 void TiltServo::moveTo(uint8_t deg)
-{
-    *uOCR2A = deg;
+{   *uOCR2A = deg;
 }
 
 void ComPort::poets(const char *s)
@@ -105,8 +102,7 @@ Robot::Robot()
 }
 
 char *ComPort::getBuffer()
-{
-    return buffer;
+{   return buffer;
 }
 
 void ComPort::onReceive()
@@ -116,23 +112,19 @@ void ComPort::onReceive()
 }
 
 void Robot::blink()
-{
-    *portB ^= (1<<5);
+{   *portB ^= (1<<5);
 }
 
 ComPort *Robot::getComPort()
-{
-    return &comPort;
+{   return &comPort;
 }
 
 Sonic *Robot::getSonic()
-{
-    return &sonic;
+{   return &sonic;
 }
 
 unsigned long Sonic::pulseIn()
-{
-    return 0;
+{   return 0;
 }
 
 void Robot::command(char *cmd)
@@ -165,14 +157,13 @@ void Robot::command(char *cmd)
     if (strcmp(commando, "o") == 0)
     {
         char s[30];
-        sprintf(s, "%d\r\n", tripMeter.read());
+        sprintf(s, "%d - %d\r\n", tripMeter.read(), tripMeter.readRight());
         comPort.poets(s);
     }
 }
 
 TripMeter *Robot::getTripMeter()
-{
-    return &tripMeter;
+{   return &tripMeter;
 }
 
 int Robot::loop()
@@ -221,6 +212,7 @@ void Motor::linksAchteruit(unsigned int speed)
 void Motor::rechtsVooruit(unsigned int speed)
 {
     g_robot.blink();
+
     if (speed > 20)
         *portD |= (1<<6) | (1<<7);
     else
@@ -241,24 +233,25 @@ TripMeter::TripMeter()
 {
     left = 0;
     right = 0;
-    *portD |= (1<<2);
-    *eicra |= (1<<1);
-    *eimsk |= (1<<0);
+    *portD |= (1<<2) | (1<<3);
+    *eicra |= (1<<ISC01);
+    *eimsk |= (1<<INT0) | (1<<INT1);    // enable external interupt 0 & 1
 }
 
 void TripMeter::countLeft()
-{
-    left++;
+{   left++;
 }
 
 void TripMeter::countRight()
-{
-    right++;
+{   right++;
 }
 
 unsigned int TripMeter::read()
-{
-    return left;
+{   return left;
+}
+
+unsigned int TripMeter::readRight()
+{   return right;
 }
 
 Sonic::Sonic()
@@ -286,22 +279,26 @@ void Sonic::sense()
 }
 
 void __vector_1()
-{
-    g_robot.getTripMeter()->countLeft();
+{   g_robot.getTripMeter()->countLeft();
 }
+
+
+void __vector_2()
+{   g_robot.getTripMeter()->countRight();
+}
+
 
 void __vector_10()
-{
-    g_robot.getSonic()->sense();
+{   g_robot.getSonic()->sense();
 }
+
 
 void __vector_18()
-{
-    g_robot.getComPort()->onReceive();
+{   g_robot.getComPort()->onReceive();
 }
 
-int main()
-{
+
+int main() {
     return g_robot.loop();
 }
 
