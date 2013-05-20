@@ -124,7 +124,8 @@ Sonic *Robot::getSonic()
 }
 
 unsigned long Sonic::pulseIn()
-{   return 0;
+{
+    return 0;
 }
 
 void Robot::command(char *cmd)
