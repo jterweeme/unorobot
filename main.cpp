@@ -234,9 +234,13 @@ TripMeter::TripMeter()
 {
     left = 0;
     right = 0;
-    *portD |= (1<<2) | (1<<3);
-    *eicra |= (1<<ISC01);
-    *eimsk |= (1<<INT0) | (1<<INT1);    // enable external interupt 0 & 1
+    //*portD |= (1<<2);
+    //*eicra |= (1<<ISC01);
+    //*eimsk |= (1<<INT0);    // enable external interupt 0
+    *pcicr |= (1<<PCIE1) | (1<<PCIE2);
+    //*pcmsk0 |= (1<<PCINT5);
+    *pcmsk1 |= (1<<PCINT13);
+    *pcmsk2 |= (1<<PCINT18);
 }
 
 void TripMeter::countLeft()
@@ -288,6 +292,17 @@ void __vector_2()
 {   g_robot.getTripMeter()->countRight();
 }
 
+void __vector_3()
+{   g_robot.getTripMeter()->countLeft();
+}
+
+void __vector_4()
+{   g_robot.getTripMeter()->countRight();
+}
+
+void __vector_5()
+{   g_robot.getTripMeter()->countLeft();
+}
 
 void __vector_10()
 {   g_robot.getSonic()->sense();

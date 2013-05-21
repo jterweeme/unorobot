@@ -5,6 +5,9 @@
 
 extern "C" void __vector_1()  __attribute__ ((signal, used, externally_visible)); //INT0
 extern "C" void __vector_2()  __attribute__ ((signal, used, externally_visible)); //INT1
+extern "C" void __vector_3()  __attribute__ ((signal, used, externally_visible)); //PCINT0
+extern "C" void __vector_4()  __attribute__ ((signal, used, externally_visible)); //PCINT1
+extern "C" void __vector_5()  __attribute__ ((signal, used, externally_visible)); //PCINT2
 extern "C" void __vector_10() __attribute__ ((signal, used, externally_visible)); //TIMER1_CAPT
 extern "C" void __vector_18() __attribute__ ((signal, used, externally_visible)); //USART_RX
 
@@ -118,10 +121,27 @@ private:
     unsigned int right;
     static constexpr hwAddr const portD = (hwAddr)0x2b;
     static constexpr hwAddr const eimsk = (hwAddr)0x3d;
+    static constexpr hwAddr const pcicr = (hwAddr)0x68;
     static constexpr hwAddr const eicra = (hwAddr)0x69;
+    static constexpr hwAddr const pcmsk0 = (hwAddr)0x6b;
+    static constexpr hwAddr const pcmsk1 = (hwAddr)0x6c;
+    static constexpr hwAddr const pcmsk2 = (hwAddr)0x6d;
     static const uint8_t ISC01 = 1;
     static const uint8_t INT0 = 0;
     static const uint8_t INT1 = 1;
+    static const uint8_t PCINT5 = 5;
+    static const uint8_t PCINT8 = 0;
+    static const uint8_t PCINT9 = 1;
+    static const uint8_t PCINT10 = 2;
+    static const uint8_t PCINT11 = 3;
+    static const uint8_t PCINT12 = 4;
+    static const uint8_t PCINT13 = 5;
+    static const uint8_t PCINT14 = 6;
+    static const uint8_t PCINT18 = 2;
+    static const uint8_t PCIE0 = 0;
+    static const uint8_t PCIE1 = 1;
+    static const uint8_t PCIE2 = 2;
+
 };
 
 class PWMPLLMotor : public Motor
