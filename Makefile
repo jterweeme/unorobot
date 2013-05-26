@@ -1,4 +1,4 @@
-all: main.hex documentation.pdf
+all: main.hex unorobot.svg unorobot.png
 
 main.hex: main
 	avr-objcopy -O ihex -R .eeprom $< $@
@@ -15,8 +15,8 @@ upload: main.hex
 unorobot.svg: unorobot.uxf
 	umlet -action=convert -format=svg -filename=$<
 
-documentation.pdf: documentation.xml pdf.xsl unorobot.svg
-	fop -xsl pdf.xsl -xml documentation.xml -pdf $@
+unorobot.png: unorobot.uxf
+	umlet -action=convert -format=png -filename=$<
 
 clean:
 	rm -v documentation.pdf main.o main
