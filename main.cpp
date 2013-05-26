@@ -1,6 +1,6 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <stdint.h>
+#include <stdlib.h>
 #include <string.h>
 #include "main.h"
 
@@ -61,10 +61,11 @@ int ComPort::addToBuffer(char c)
 PanServo::PanServo()
 {
     *dataDirectionB |= (1<<ARDUINO_D9);
-    *uTCCR1A = (1<<UWGM00) | (1<<UWGM01) | (1<<UCOM1A1) | (1<<UCS01) | (1<<UCS00);
-    *UNOTCCR1B = (1<<UWGM00) | (1<<UWGM01) | (1<<UCOM1A1) | (1<<UCS01) | (1<<UCS00);
+    *uTCCR1A = (1<<UCOM1A1);
+    //*uTCCR1A = (1<<UWGM00) | (1<<UWGM01) | (1<<UCOM1A1) | (1<<UCS01) | (1<<UCS00);
+    //*UNOTCCR1B = (1<<UWGM00) | (1<<UWGM01) | (1<<UCOM1A1) | (1<<UCS01) | (1<<UCS00);
     *output = 200;
-    *UNOOCR1B = 144;
+    //*UNOOCR1B = 144;
 }
 
 TiltServo::TiltServo()
@@ -158,9 +159,12 @@ void Robot::command(char *cmd)
     if (strcmp(commando, "o") == 0)
     {
         char s[30];
-        sprintf(s, "%d - %d\r\n", tripMeter.read(), tripMeter.readRight());
+        sprintf(s, "%d - %d", tripMeter.read(), tripMeter.readRight());
         comPort.poets(s);
     }
+    
+    if (strcmp(commando, "d") == 0)
+        comPort.poets("Cookie");
 }
 
 TripMeter *Robot::getTripMeter()
@@ -176,6 +180,10 @@ int Robot::loop()
 }
 
 PWMPLLMotor::PWMPLLMotor() : Motor()
+{
+}
+
+PWMMotor::PWMMotor() : Motor()
 {
 }
 
@@ -283,14 +291,16 @@ void Sonic::sense()
     
 }
 
+/*
 void __vector_1()
 {   g_robot.getTripMeter()->countLeft();
-}
+}*/
 
-
+/*
 void __vector_2()
 {   g_robot.getTripMeter()->countRight();
 }
+*/
 
 void __vector_3()
 {   g_robot.getTripMeter()->countLeft();

@@ -1,7 +1,6 @@
 #ifndef _MAIN_H_
 #define _MAIN_H_
 #include <stdint.h>
-#include <stdlib.h>
 
 extern "C" void __vector_1()  __attribute__ ((signal, used, externally_visible)); //INT0
 extern "C" void __vector_2()  __attribute__ ((signal, used, externally_visible)); //INT1
@@ -12,11 +11,6 @@ extern "C" void __vector_10() __attribute__ ((signal, used, externally_visible))
 extern "C" void __vector_18() __attribute__ ((signal, used, externally_visible)); //USART_RX
 
 typedef volatile uint8_t * hwAddr;
-
-inline void * operator new (size_t size)
-{
-    return malloc(size);
-}
 
 class ComPort
 {
@@ -150,6 +144,12 @@ public:
     PWMPLLMotor();
     void linksVooruit(unsigned int);
     void linksAchteruit(unsigned int);
+};
+
+class PWMMotor : public Motor
+{
+public:
+    PWMMotor();
 };
 
 class Sonic
