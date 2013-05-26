@@ -34,7 +34,7 @@ void PanServo::moveTo(uint8_t deg)
 }
 
 void TiltServo::moveTo(uint8_t deg)
-{   *uOCR2A = deg;
+{   *output = deg;
 }
 
 void ComPort::poets(const char *s)
@@ -61,21 +61,15 @@ int ComPort::addToBuffer(char c)
 PanServo::PanServo()
 {
     *dataDirectionB |= (1<<ARDUINO_D9);
-    *uTCCR1A = (1<<UCOM1A1);
-    //*uTCCR1A = (1<<UWGM00) | (1<<UWGM01) | (1<<UCOM1A1) | (1<<UCS01) | (1<<UCS00);
-    //*UNOTCCR1B = (1<<UWGM00) | (1<<UWGM01) | (1<<UCOM1A1) | (1<<UCS01) | (1<<UCS00);
+    *TCCR1A = (1<<COM1A1) | (1<<COM1B1) | (1<<WGM10);
     *output = 200;
-    //*UNOOCR1B = 144;
 }
 
 TiltServo::TiltServo()
 {
-    *dataDirectionB |= (1<<ARDUINO_D11);
-    *uTCCR2A = (1<<UWGM00) | (1<<UWGM01) | (1<<UCOM1A1) | (1<<UCS01) | (1<<UCS00);
-    *uTCCR2B = (1<<UWGM00) | (1<<UWGM01) | (1<<UCOM1A1) | (1<<UCS01) | (1<<UCS00);
-    *uOCR2A = 244;
-    *uOCR2B = 144;
-
+    *dataDirectionB |= (1<<ARDUINO_D10);
+    *TCCR1B = (1<<WGM12) | (1<<CS11) | (1<<CS10);
+    *output = 200;
 }
 
 Servo::Servo()

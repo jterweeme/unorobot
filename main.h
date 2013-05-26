@@ -43,12 +43,26 @@ public:
     Servo();
 protected:
     static constexpr hwAddr const dataDirectionB = (hwAddr)0x24;
-    static const uint8_t UWGM00  = 0;
-    static const uint8_t UWGM01  = 1;
-    static const uint8_t UCOM1A1 = 7;
-    static const uint8_t UCOM2A1 = 7;
-    static const uint8_t UCS01   = 1;
-    static const uint8_t UCS00   = 0;
+    static const uint8_t WGM00  = 0;
+    static const uint8_t WGM01  = 1;
+
+    static const uint8_t WGM10  = 0;
+    static const uint8_t WGM11  = 1;
+    static const uint8_t COM1B0 = 4;
+    static const uint8_t COM1B1 = 5;
+    static const uint8_t COM1A0 = 6;
+    static const uint8_t COM1A1 = 7;
+
+    static const uint8_t CS10   = 0;
+    static const uint8_t CS11   = 1;
+    static const uint8_t CS12   = 2;
+    static const uint8_t WGM12  = 3;
+    static const uint8_t WGM13  = 4;
+
+    static const uint8_t COM2A1 = 7;
+
+    static const uint8_t CS01   = 1;
+    static const uint8_t CS00   = 0;
 };
 
 class PanServo : public Servo
@@ -58,10 +72,8 @@ public:
     void move();
     void moveTo(uint8_t);
 private:
-    static constexpr hwAddr const uTCCR1A   = (hwAddr)0x80;
-    static constexpr hwAddr const UNOTCCR1B = (hwAddr)0x81;
+    static constexpr hwAddr const TCCR1A    = (hwAddr)0x80;
     static constexpr hwAddr const output    = (hwAddr)0x88;
-    static constexpr hwAddr const UNOOCR1B  = (hwAddr)0x8a;
     static const uint8_t ARDUINO_D9 = 1;    // PB1
 };
 
@@ -71,11 +83,10 @@ public:
     TiltServo();
     void moveTo(uint8_t);
 private:
-    static constexpr hwAddr const uTCCR2A = (volatile uint8_t *)0xb0;
-    static constexpr hwAddr const uTCCR2B = (volatile uint8_t *)0xb1;
-    static constexpr hwAddr const uOCR2A  = (volatile uint8_t *)0xb3;
-    static constexpr hwAddr const uOCR2B  = (volatile uint8_t *)0xb4;
-    static const uint8_t ARDUINO_D11 = 3;   // PB3
+    static constexpr hwAddr const output = (hwAddr)0x8a;
+    static constexpr hwAddr const TCCR1B = (hwAddr)0x81;
+    static const uint8_t ARDUINO_D10 = 2;
+
 };
 
 class PanTilt
