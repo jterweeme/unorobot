@@ -192,11 +192,11 @@ class Sonic
 public:
     Sonic();
     unsigned int trigger();
-    void sense();
+    unsigned long sense();
     unsigned long pulseIn();
 private:
-    static uint16_t pulse_start;
-    static uint16_t pulse_width;
+    uint16_t pulse_start;
+    uint16_t pulse_width;
     static constexpr hwAddr const timerFlags     = (hwAddr)0x81;
     static constexpr hwAddr const counter        = (hwAddr)0x84;
     static constexpr hwAddr const inputCapture   = (hwAddr)0x86;

@@ -148,16 +148,21 @@ void Robot::command(char *cmd)
         motor.rechtsAchteruit(deg);
 
     if (strcmp(commando, "d") == 0)
-        sonic.trigger();
+    {
+        unsigned long duur = sonic.sense();
+        char s[50];
+        sprintf(s, "s%lus", duur);
+        comPort.poets(s);
+    }
 
     if (strcmp(commando, "o") == 0)
     {
         char s[30];
-        sprintf(s, "%d - %d", tripMeter.read(), tripMeter.readRight());
+        sprintf(s, "t%d - %dt", tripMeter.read(), tripMeter.readRight());
         comPort.poets(s);
     }
     
-    if (strcmp(commando, "d") == 0)
+    if (strcmp(commando, "x") == 0)
         comPort.poets("Cookie");
 }
 
@@ -326,12 +331,9 @@ unsigned int Sonic::trigger()
     return 0;
 }
 
-uint16_t Sonic::pulse_start;
-uint16_t Sonic::pulse_width;
-
-void Sonic::sense()
+unsigned long Sonic::sense()
 {
-    
+    return 123456789;
 }
 
 /*
