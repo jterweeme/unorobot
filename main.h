@@ -161,6 +161,30 @@ class PWMMotor : public Motor
 {
 public:
     PWMMotor();
+    void linksVooruit(unsigned int);
+    void linksAchteruit(unsigned int);
+    void rechtsVooruit(unsigned int);
+    void rechtsAchteruit(unsigned int);
+private:
+    static constexpr hwAddr const TCCR0A = (hwAddr)0x44;
+    static constexpr hwAddr const TCCR0B = (hwAddr)0x45;
+    static constexpr hwAddr const TCNT0  = (hwAddr)0x46;
+    static constexpr hwAddr const OCR0A  = (hwAddr)0x47;
+    static constexpr hwAddr const OCR0B  = (hwAddr)0x48;
+
+    static const uint8_t WGM00  = 0;
+    static const uint8_t WGM01  = 1;
+    static const uint8_t COM0B0 = 4;
+    static const uint8_t COM0B1 = 5;
+    static const uint8_t COM0A0 = 6;
+    static const uint8_t COM0A1 = 7;
+
+    static const uint8_t CS00   = 0;
+    static const uint8_t CS01   = 1;
+    static const uint8_t CS02   = 2;
+    static const uint8_t WGM02  = 3;
+    static const uint8_t FOC0B  = 6;
+    static const uint8_t FOC0A  = 7;
 };
 
 class Sonic
@@ -196,7 +220,7 @@ public:
 private:
     PanTilt pt;
     ComPort comPort;
-    PWMPLLMotor motor;
+    PWMMotor motor;
     static constexpr hwAddr const portB = (hwAddr)0x25;
     static constexpr hwAddr const dataDirectionB = (hwAddr)0x24;
     Sonic sonic;
