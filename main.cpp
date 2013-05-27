@@ -183,9 +183,32 @@ PWMMotor::PWMMotor() : Motor()
     *TCCR0B = (1<<WGM01) | (1<<CS00);
 }
 
+/*
 void PWMMotor::linksVooruit(unsigned int speed)
 {
     *portD |= (1<<4);
+    *OCR0B = speed;
+}*/
+
+void PWMMotor::linksVooruit(unsigned int speed)
+{
+    asm volatile
+    (
+        "ldi r24,lo8(43)\n"
+        "ldi r25,0\n"
+        "ldi r18,lo8(43)\n"
+        "ldi r19,0\n"
+        "movw r30, r18\n"
+        "ld r18,Z\n"
+        "ori r18, lo8(16)\n"
+        "movw r30, r24\n"
+        "st Z,r18\n"
+        "ldi r24,lo8(72)\n"
+        "ldi r25,0\n"
+        "ldd r18,Y+3\n"
+        "movw r30,r24\n"
+        "st Z,r18\n"
+    );
     *OCR0B = speed;
 }
 
