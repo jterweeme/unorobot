@@ -117,7 +117,7 @@ Sonic *Robot::getSonic()
 uint16_t Sonic::bogus(uint8_t port)
 {
     uint16_t result;
-    char c = get_port(9);
+    //char c = get_port(9);
 /*
     asm volatile
     (
@@ -201,15 +201,9 @@ PWMMotor::PWMMotor() : Motor()
     *TCCR0B = (1<<WGM01) | (1<<CS00);
 }
 
+void PWMMotor::linksVooruit(unsigned int speed)
+{
 /*
-void PWMMotor::linksVooruit(unsigned int speed)
-{
-    *portD |= (1<<4);
-    *OCR0B = speed;
-}*/
-
-void PWMMotor::linksVooruit(unsigned int speed)
-{
     asm volatile
     (
         "ldi r24,lo8(43)\n"
@@ -227,7 +221,11 @@ void PWMMotor::linksVooruit(unsigned int speed)
         "movw r30,r24\n"
         "st Z,r18\n"
     );
+*/
+    *portD |= (1<<4);
     *OCR0B = speed;
+
+    //get_port(speed);
 }
 
 void PWMMotor::linksAchteruit(unsigned int speed)
