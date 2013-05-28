@@ -13,10 +13,6 @@ ComPort::ComPort()
     asm volatile ("sei" ::: "memory");
 }
 
-char ComPort::buffer[200];
-uint8_t ComPort::buffer_ptr;
-uint8_t ComPort::last_buffer_ptr;
-
 void ComPort::putcee(char c)
 {
     while (!(*uUCSR0A & (1<<5))) {
@@ -117,6 +113,23 @@ ComPort *Robot::getComPort()
 Sonic *Robot::getSonic()
 {   return &sonic;
 }
+
+uint16_t Sonic::bogus(uint8_t port)
+{
+    uint16_t result;
+    char c = get_port(9);
+/*
+    asm volatile
+    (
+        "in %A0,%1\n"
+        "in %B0, (%1) + 1\n"
+        : "=r" (result)
+        : "I" (port)
+    );
+*/
+    return 0;
+}
+
 
 unsigned long Sonic::pulseIn()
 {

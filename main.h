@@ -10,6 +10,8 @@ extern "C" void __vector_5()  __attribute__ ((signal, used, externally_visible))
 extern "C" void __vector_10() __attribute__ ((signal, used, externally_visible)); //TIMER1_CAPT
 extern "C" void __vector_18() __attribute__ ((signal, used, externally_visible)); //USART_RX
 
+extern "C" char get_port(char mask);
+
 typedef volatile uint8_t * hwAddr;
 
 class ComPort
@@ -23,9 +25,9 @@ private:
     int addToBuffer(char);
     char *getBuffer();
 
-    static char buffer[200];
-    static uint8_t buffer_ptr;
-    static uint8_t last_buffer_ptr;
+    char buffer[200];
+    uint8_t buffer_ptr;
+    uint8_t last_buffer_ptr;
 
     static constexpr hwAddr const uUDR0             = (hwAddr)0xc6;
     static constexpr hwAddr const baudRateRegister  = (hwAddr)0xc4;
@@ -194,6 +196,7 @@ public:
     unsigned int trigger();
     unsigned long sense();
     unsigned long pulseIn();
+    uint16_t bogus(uint8_t);
 private:
     uint16_t pulse_start;
     uint16_t pulse_width;
