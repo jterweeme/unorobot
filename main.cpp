@@ -56,16 +56,22 @@ int ComPort::addToBuffer(char c)
 
 PanServo::PanServo()
 {
-    *dataDirectionB |= (1<<ARDUINO_D9);
-    *TCCR1A = (1<<COM1A1) | (1<<COM1B1) | (1<<WGM10);
+    *dataDirectionD |= (1<<ARDUINO_D3);
+    *TCCR2A = (1<<COM2A1) | (1<<COM2B1) | (1<<WGM21) | (1<<WGM20);
+    //*TCCR2B = (1<<WGM21) | (1<<CS20);
+    *TCCR2B = (1<<WGM21) | (1<<CS21) | (1<<CS22);
+    //*TCCR1A = (1<<COM1A1) | (1<<COM1B1) | (1<<WGM10);
     *output = 200;
+    //*TCCR0A = (1<<COM0A1) | (1<<COM0B1) | (1<<WGM01) | (1<<WGM00);
+    //*TCCR0B = (1<<WGM01) | (1<<CS00);
+
 }
 
 TiltServo::TiltServo()
 {
-    *dataDirectionB |= (1<<ARDUINO_D10);
-    *TCCR1B = (1<<WGM12) | (1<<CS11) | (1<<CS10);
-    *output = 200;
+    *dataDirectionB |= (1<<ARDUINO_D11);
+    //*TCCR1B = (1<<WGM12) | (1<<CS11) | (1<<CS10);
+    *output = 100;
 }
 
 Servo::Servo()

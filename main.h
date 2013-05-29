@@ -45,6 +45,10 @@ public:
     Servo();
 protected:
     static constexpr hwAddr const dataDirectionB = (hwAddr)0x24;
+    static constexpr hwAddr const dataDirectionD = (hwAddr)0x2a;
+
+    static constexpr hwAddr const TCCR2A = (hwAddr)0xb0;
+    static constexpr hwAddr const TCCR2B = (hwAddr)0xb1;
     static const uint8_t WGM00  = 0;
     static const uint8_t WGM01  = 1;
 
@@ -61,10 +65,22 @@ protected:
     static const uint8_t WGM12  = 3;
     static const uint8_t WGM13  = 4;
 
-    static const uint8_t COM2A1 = 7;
-
     static const uint8_t CS01   = 1;
     static const uint8_t CS00   = 0;
+
+    static const uint8_t WGM20  = 0;
+    static const uint8_t WGM21  = 1;
+    static const uint8_t COM2B0 = 4;
+    static const uint8_t COM2B1 = 5;
+    static const uint8_t COM2A0 = 6;
+    static const uint8_t COM2A1 = 7;
+
+    static const uint8_t CS20   = 0;
+    static const uint8_t CS21   = 1;
+    static const uint8_t CS22   = 2;
+    static const uint8_t WGM22  = 3;
+    static const uint8_t FOC2B  = 6;
+    static const uint8_t FOC2A  = 7;
 };
 
 class PanServo : public Servo
@@ -75,8 +91,9 @@ public:
     void moveTo(uint8_t);
 private:
     static constexpr hwAddr const TCCR1A    = (hwAddr)0x80;
-    static constexpr hwAddr const output    = (hwAddr)0x88;
+    static constexpr hwAddr const output    = (hwAddr)0xb4;
     static const uint8_t ARDUINO_D9 = 1;    // PB1
+    static const uint8_t ARDUINO_D3 = 3;    // PD3
 };
 
 class TiltServo : public Servo
@@ -85,10 +102,10 @@ public:
     TiltServo();
     void moveTo(uint8_t);
 private:
-    static constexpr hwAddr const output = (hwAddr)0x8a;
+    static constexpr hwAddr const output = (hwAddr)0xb3;
     static constexpr hwAddr const TCCR1B = (hwAddr)0x81;
     static const uint8_t ARDUINO_D10 = 2;
-
+    static const uint8_t ARDUINO_D11 = 3;   // PB3
 };
 
 class PanTilt
