@@ -58,19 +58,13 @@ PanServo::PanServo()
 {
     *dataDirectionD |= (1<<ARDUINO_D3);
     *TCCR2A = (1<<COM2A1) | (1<<COM2B1) | (1<<WGM21) | (1<<WGM20);
-    //*TCCR2B = (1<<WGM21) | (1<<CS20);
     *TCCR2B = (1<<CS21) | (1<<CS22);
-    //*TCCR1A = (1<<COM1A1) | (1<<COM1B1) | (1<<WGM10);
     *output = 200;
-    //*TCCR0A = (1<<COM0A1) | (1<<COM0B1) | (1<<WGM01) | (1<<WGM00);
-    //*TCCR0B = (1<<WGM01) | (1<<CS00);
-
 }
 
 TiltServo::TiltServo()
 {
     *dataDirectionB |= (1<<ARDUINO_D11);
-    //*TCCR1B = (1<<WGM12) | (1<<CS11) | (1<<CS10);
     *output = 100;
 }
 
@@ -187,34 +181,6 @@ int Robot::loop()
     return 0;
 }
 
-PWMPLLMotor::PWMPLLMotor() : Motor()
-{
-}
-
-PWMMotor::PWMMotor() : Motor()
-{
-    *TCCR0A = (1<<COM0A1) | (1<<COM0B1) | (1<<WGM01) | (1<<WGM00);
-    *TCCR0B = (1<<WGM01) | (1<<CS00);
-}
-
-void PWMMotor::linksVooruit(unsigned int speed)
-{
-    *portD |= (1<<4);
-    *OCR0B = speed;
-}
-
-void PWMMotor::linksAchteruit(unsigned int speed)
-{
-    *portD &= ~(1<<4);
-    *OCR0B = speed;
-}
-
-void PWMMotor::rechtsVooruit(unsigned int speed)
-{
-    *portD |= (1<<7);
-    *OCR0A = speed;
-}
-
 void PWMMotor::rechtsAchteruit(unsigned int speed)
 {
     *portD &= ~(1<<7);
@@ -276,11 +242,7 @@ TripMeter::TripMeter()
 {
     left = 0;
     right = 0;
-    //*portD |= (1<<2);
-    //*eicra |= (1<<ISC01);
-    //*eimsk |= (1<<INT0);    // enable external interupt 0
     *pcicr |= (1<<PCIE1) | (1<<PCIE2);
-    //*pcmsk0 |= (1<<PCINT5);
     *pcmsk1 |= (1<<PCINT13);
     *pcmsk2 |= (1<<PCINT18);
 }
@@ -306,7 +268,6 @@ Sonic::Sonic()
     *dataDirectionB &= ~(1<<0);
     *dataDirectionB |= (1<<4);
     *interruptFlags = 0;
-    //*timerFlags |= (1<<
 }
 
 unsigned int Sonic::trigger()
@@ -321,17 +282,6 @@ unsigned long Sonic::sense()
 {
     return 123456789;
 }
-
-/*
-void __vector_1()
-{   g_robot.getTripMeter()->countLeft();
-}*/
-
-/*
-void __vector_2()
-{   g_robot.getTripMeter()->countRight();
-}
-*/
 
 void __vector_3()
 {   g_robot.getTripMeter()->countLeft();
