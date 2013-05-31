@@ -59,7 +59,7 @@ PanServo::PanServo()
     *dataDirectionD |= (1<<ARDUINO_D3);
     *TCCR2A = (1<<COM2A1) | (1<<COM2B1) | (1<<WGM21) | (1<<WGM20);
     //*TCCR2B = (1<<WGM21) | (1<<CS20);
-    *TCCR2B = (1<<WGM21) | (1<<CS21) | (1<<CS22);
+    *TCCR2B = (1<<CS21) | (1<<CS22);
     //*TCCR1A = (1<<COM1A1) | (1<<COM1B1) | (1<<WGM10);
     *output = 200;
     //*TCCR0A = (1<<COM0A1) | (1<<COM0B1) | (1<<WGM01) | (1<<WGM00);
