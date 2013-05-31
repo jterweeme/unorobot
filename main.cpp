@@ -123,16 +123,6 @@ Sonic *Robot::getSonic()
 uint16_t Sonic::bogus(uint8_t port)
 {
     uint16_t result;
-    //char c = get_port(9);
-/*
-    asm volatile
-    (
-        "in %A0,%1\n"
-        "in %B0, (%1) + 1\n"
-        : "=r" (result)
-        : "I" (port)
-    );
-*/
     return 0;
 }
 
@@ -209,29 +199,8 @@ PWMMotor::PWMMotor() : Motor()
 
 void PWMMotor::linksVooruit(unsigned int speed)
 {
-/*
-    asm volatile
-    (
-        "ldi r24,lo8(43)\n"
-        "ldi r25,0\n"
-        "ldi r18,lo8(43)\n"
-        "ldi r19,0\n"
-        "movw r30, r18\n"
-        "ld r18,Z\n"
-        "ori r18, lo8(16)\n"
-        "movw r30, r24\n"
-        "st Z,r18\n"
-        "ldi r24,lo8(72)\n"
-        "ldi r25,0\n"
-        "ldd r18,Y+3\n"
-        "movw r30,r24\n"
-        "st Z,r18\n"
-    );
-*/
     *portD |= (1<<4);
     *OCR0B = speed;
-
-    //get_port(speed);
 }
 
 void PWMMotor::linksAchteruit(unsigned int speed)

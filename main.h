@@ -10,8 +10,6 @@ extern "C" void __vector_5()  __attribute__ ((signal, used, externally_visible))
 extern "C" void __vector_10() __attribute__ ((signal, used, externally_visible)); //TIMER1_CAPT
 extern "C" void __vector_18() __attribute__ ((signal, used, externally_visible)); //USART_RX
 
-extern "C" void get_port(int);
-
 typedef volatile uint8_t * hwAddr;
 
 class ComPort
